@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.duongdt3.ui_mobile">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application>
+        <activity
+                android:name=".features.book_demo.DemoBookActivity"
+                android:configChanges="orientation|keyboardHidden"
+                android:label="Demo book"
+                android:launchMode="singleTop"
+                android:screenOrientation="portrait"
+                android:theme="@style/Theme.AppCompat"
+                android:taskAffinity=":SearchWebComicActivity"
+                android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

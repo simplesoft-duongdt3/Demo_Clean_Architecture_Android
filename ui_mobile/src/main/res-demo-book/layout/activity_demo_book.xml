@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/vGetBookSuccess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get book: Success" />
+
+        <Button
+            android:id="@+id/vGetBookServerFail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get book: Server fail" />
+
+        <Button
+            android:id="@+id/vGetBookTimeout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get book: Time out" />
+
+        <Button
+            android:id="@+id/vGetBookSomethingWrong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get book: Something wrong" />
+
+        <Button
+            android:id="@+id/vGetNonWrappedResponse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get non wrapped response" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/vLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        tools:visibility="gone"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+    </LinearLayout>
+</FrameLayout>

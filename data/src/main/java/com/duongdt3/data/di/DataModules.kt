@@ -1,7 +1,6 @@
 package com.duongdt3.data.di
 
 import android.content.Context
-import com.duongdt3.data.BuildConfig
 import com.duongdt3.data.dataservice.network.converter.WrappedResponseConverterFactory
 import com.duongdt3.data.dataservice.network.model.BookNonWrappedResponse
 import com.duongdt3.data.dataservice.network.service.DemoBookApiService
@@ -10,7 +9,6 @@ import com.duongdt3.data.repository.DemoBookRepositoryImpl
 import com.duongdt3.data.util.OkHttpClientFactory
 import com.duongdt3.domain.common.usecase.single.UseCaseCommonFailModelFactory
 import com.duongdt3.domain.repository.DemoBookRepository
-import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -33,9 +31,16 @@ object DataModules {
         val okHttpClientFactory = OkHttpClientFactory()
         fun createDemoBookApiService(context: Context): DemoBookApiService {
             val apiUrl = "https://demobook.free.beeceptor.com/"
+
+            //create gson default converter factory
             val gsonConverterFactory = GsonConverterFactory.create()
-            val excludeClasses = listOf<Class<*>>(BookNonWrappedResponse::class.java)
-            val wrappedResponseConverterFactory = WrappedResponseConverterFactory(gsonConverterFactory, excludeClasses)
+
+            //add nonWrappedModelClasses
+            val nonWrappedModelClasses = listOf<Class<*>>(BookNonWrappedResponse::class.java)
+
+            //create wrappedResponseConverterFactory
+            val wrappedResponseConverterFactory = WrappedResponseConverterFactory(gsonConverterFactory, nonWrappedModelClasses)
+
             val build = Retrofit.Builder()
                     .client(okHttpClientFactory.createTrustHttpsClient(context = context))
                     .baseUrl(apiUrl)

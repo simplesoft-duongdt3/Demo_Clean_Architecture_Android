@@ -4,6 +4,7 @@ import android.content.Context
 import com.duongdt3.data.BuildConfig
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.security.cert.CertificateException
@@ -61,6 +62,11 @@ class OkHttpClientFactory {
         if (BuildConfig.DEBUG) {
             //add Stetho NetworkInterceptor
             okHttpBuilder.addNetworkInterceptor(StethoInterceptor())
+        }
+
+        if (BuildConfig.DEBUG) {
+            //add Check Interceptor
+            okHttpBuilder.addInterceptor(ChuckInterceptor(context))
         }
 
         return okHttpBuilder.build()

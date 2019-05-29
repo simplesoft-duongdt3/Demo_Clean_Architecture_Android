@@ -21,3 +21,6 @@ interface DemoBookApiService {
     @GET("no-wrapped-response")
     fun getBookNonWrappedResponse(): Single<BookNonWrappedResponse>
 }
+
+
+

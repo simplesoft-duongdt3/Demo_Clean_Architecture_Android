@@ -6,3 +6,4 @@ interface ResultListener<in Result> {
     fun success(data: Result)
     fun fail(error: UseCaseFailModel)
 }
+

@@ -9,9 +9,14 @@ class UseCaseCommonFailModelFactoryImpl : UseCaseCommonFailModelFactory {
     override fun createFailUseCaseModel(throwable: Throwable): UseCaseFailModel {
         return when (throwable) {
             is ServerException -> UseCaseFailModel.ServerFail(throwable.serverErrorCode, throwable.serverErrorMsg)
+
             is SocketTimeoutException -> UseCaseFailModel.NetworkTimeoutFail()
+
             is HttpException -> UseCaseFailModel.NetworkConnectionFail(throwable.code(), throwable.message())
+
             else -> UseCaseFailModel.UnknownFail(throwable.message)
         }
     }
 }
+
+

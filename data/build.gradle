@@ -47,4 +47,9 @@ dependencies {
     debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.4.2'
     //Stetho no-op version
     releaseImplementation "net.igenius:stetho-no-op:1.1"
+
+    //Chuck
+    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
+    //Chuck no-op
+    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
 }

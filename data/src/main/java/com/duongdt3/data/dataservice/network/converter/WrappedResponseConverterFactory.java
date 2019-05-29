@@ -35,7 +35,7 @@ public class WrappedResponseConverterFactory extends Converter.Factory {
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(final Type type,
                                                             Annotation[] annotations, Retrofit retrofit) {
-        if (isExclude(type)) {
+        if (isExcludeType(type)) {
             return gsonConverterFactory.responseBodyConverter(type, annotations, retrofit);
         } else {
             Type wrappedType = new ParameterizedType() {
@@ -61,7 +61,8 @@ public class WrappedResponseConverterFactory extends Converter.Factory {
         }
     }
 
-    private boolean isExclude(Type type) {
+    
+    private boolean isExcludeType(Type type) {
         boolean isExclude = false;
         if (type instanceof Class<?>) {
             Class<?> clazzType = (Class<?>) type;

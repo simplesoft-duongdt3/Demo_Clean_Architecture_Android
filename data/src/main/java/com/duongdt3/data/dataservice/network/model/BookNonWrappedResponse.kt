@@ -8,3 +8,4 @@ class BookNonWrappedResponse(
         @SerializedName("title")
         val title: String?
 )
+

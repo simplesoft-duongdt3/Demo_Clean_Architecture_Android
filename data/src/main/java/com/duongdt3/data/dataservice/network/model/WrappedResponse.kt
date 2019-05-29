@@ -18,3 +18,5 @@ data class WrappedResponse<T>(
             val resultMessage: String?
     )
 }
+
+

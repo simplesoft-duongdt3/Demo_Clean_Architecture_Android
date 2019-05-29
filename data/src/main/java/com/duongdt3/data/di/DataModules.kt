@@ -1,5 +1,6 @@
 package com.duongdt3.data.di
 
+import android.content.Context
 import com.duongdt3.data.BuildConfig
 import com.duongdt3.data.dataservice.network.converter.WrappedResponseConverterFactory
 import com.duongdt3.data.dataservice.network.model.BookNonWrappedResponse
@@ -30,13 +31,13 @@ object DataModules {
 
     private val demoBookApiServiceModule = module {
         val okHttpClientFactory = OkHttpClientFactory()
-        fun createDemoBookApiService(): DemoBookApiService {
+        fun createDemoBookApiService(context: Context): DemoBookApiService {
             val apiUrl = "https://demobook.free.beeceptor.com/"
             val gsonConverterFactory = GsonConverterFactory.create()
             val excludeClasses = listOf<Class<*>>(BookNonWrappedResponse::class.java)
             val wrappedResponseConverterFactory = WrappedResponseConverterFactory(gsonConverterFactory, excludeClasses)
             val build = Retrofit.Builder()
-                    .client(okHttpClientFactory.createTrustHttpsClient())
+                    .client(okHttpClientFactory.createTrustHttpsClient(context = context))
                     .baseUrl(apiUrl)
                     .addConverterFactory(wrappedResponseConverterFactory)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -46,7 +47,7 @@ object DataModules {
         }
 
         single {
-            createDemoBookApiService()
+            createDemoBookApiService(context = get())
         }
 
         single<DemoBookRepository> {

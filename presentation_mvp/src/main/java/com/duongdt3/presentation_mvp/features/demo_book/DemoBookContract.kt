@@ -11,7 +11,6 @@ class DemoBookContract {
         abstract fun onGetBookTimeoutClicked()
         abstract fun onGetBookSomethingWrongClicked()
         abstract fun onGetNonWrappedResponseClicked()
-
     }
 
     interface View : MvpView {

@@ -1,6 +1,9 @@
 package com.duongdt3.data.util
 
+import android.content.Context
 import com.duongdt3.data.BuildConfig
+import com.facebook.stetho.Stetho
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.security.cert.CertificateException
@@ -9,8 +12,8 @@ import java.util.concurrent.TimeUnit
 import javax.net.ssl.*
 
 class OkHttpClientFactory {
-    fun createTrustHttpsClient(): OkHttpClient {
-        val builder = OkHttpClient.Builder()
+    fun createTrustHttpsClient(context: Context): OkHttpClient {
+        val okHttpBuilder = OkHttpClient.Builder()
                 .readTimeout(10, TimeUnit.SECONDS)
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
             override fun getAcceptedIssuers(): Array<X509Certificate> {
@@ -33,8 +36,8 @@ class OkHttpClientFactory {
         // Create an ssl socket factory with our all-trusting manager
         val sslSocketFactory = sslContext.socketFactory
 
-        builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
-        builder.hostnameVerifier(object : HostnameVerifier {
+        okHttpBuilder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+        okHttpBuilder.hostnameVerifier(object : HostnameVerifier {
             override fun verify(hostname: String, session: SSLSession): Boolean {
                 return true
             }
@@ -46,7 +49,20 @@ class OkHttpClientFactory {
         } else {
             HttpLoggingInterceptor.Level.NONE
         }
-        builder.addInterceptor(httpLoggingInterceptor)
-        return builder.build()
+
+        okHttpBuilder.addInterceptor(httpLoggingInterceptor)
+
+
+        if (BuildConfig.DEBUG) {
+            //init Stetho
+            Stetho.initializeWithDefaults(context)
+        }
+
+        if (BuildConfig.DEBUG) {
+            //add Stetho NetworkInterceptor
+            okHttpBuilder.addNetworkInterceptor(StethoInterceptor())
+        }
+
+        return okHttpBuilder.build()
     }
 }
